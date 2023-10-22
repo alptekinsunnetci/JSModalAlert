@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <button class="btn btn-primary" id="customConfirmButton">Devam Et</button>
+
+    <script>
+        $(document).ready(function() {
+            $("#customConfirmButton").click(function() {
+                customConfirm('Devam etmek istiyor musunuz?', function(result) {
+                    if (result) {
+                        alert('Evet seçildi. İşlem devam ediyor...');
+                    } else {
+                        alert('Hayır seçildi. İşlem iptal edildi.');
+                    }
+                });
+            });
+
+            function customConfirm(message, callback) {
+                var modalContent = '<div class="modal" tabindex="-1" role="dialog">'
+                                + '<div class="modal-dialog" role="document">'
+                                + '<div class="modal-content">'
+                                + '<div class="modal-body">'
+                                + '<p>' + message + '</p>'
+                                + '</div>'
+                                + '<div class="modal-footer">'
+                                + '<button class="btn btn-primary" data-dismiss="modal" id="confirmYes">Evet</button>'
+                                + '<button class="btn btn-secondary" data-dismiss="modal" id="confirmNo">Hayır</button>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>'
+                                + '</div>';
+
+                var modalElement = $(modalContent);
+                modalElement.modal('show');
+
+                modalElement.on('hidden.bs.modal', function () {
+                    modalElement.remove();
+                });
+
+                $("#confirmYes").click(function() {
+                    callback(true);
+                });
+
+                $("#confirmNo").click(function() {
+                    callback(false);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
